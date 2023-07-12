@@ -1,4 +1,4 @@
-# Golang-Installation
+# Golang Download & Installation
 To run the project in local, Please Download & Install Golang Version 1.20
 Download Golang - https://go.dev/doc/install
 Installation Process of Golang
