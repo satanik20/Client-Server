@@ -41,6 +41,7 @@ func main() {
 		println("Write data failed:", err.Error())
 		os.Exit(1)
 	}*/
+
 	j := 0
 	duration := time.Duration(5000000000)
 	msg := ""
@@ -50,9 +51,25 @@ func main() {
 			if j%4 == 0 {
 				duration = time.Second * 20
 				mem := &runtime.MemStats{}
-				cpu := runtime.NumCPU()
+				//cpu := runtime.NumCPU()
 				runtime.ReadMemStats(mem)
-				msg = "CPU Utilization: " + strconv.Itoa(cpu) + " | Memory Utilisation: " + strconv.Itoa(int(mem.Alloc))
+				// Get CPU from pkg
+				before, err := cpu.Get()
+				if err != nil {
+					fmt.Fprintf(os.Stderr, "%s\n", err)
+					return
+				}
+				time.Sleep(time.Duration(1) * time.Second)
+				after, err := cpu.Get()
+				if err != nil {
+					log.Println(os.Stderr, "%s\n", err)
+					return
+				}
+				total := float64(after.Total - before.Total)
+				cpu_system := float64(after.User-before.User) / total * 100
+
+				//msg = "CPU Utilization: " + strconv.Itoa(cpu) + " | Memory Utilisation: " + strconv.Itoa(int(mem.Alloc))
+				msg = "CPU Utilization: " + strconv.Itoa(cpu_system) + " | Memory Utilisation: " + strconv.Itoa(int(mem.Alloc))
 			} else {
 				duration = time.Second * 5
 				msg = "Heart Beat..."
