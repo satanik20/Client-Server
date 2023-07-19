@@ -69,7 +69,7 @@ func main() {
 				cpu_system := float64(after.User-before.User) / total * 100
 
 				//msg = "CPU Utilization: " + strconv.Itoa(cpu) + " | Memory Utilisation: " + strconv.Itoa(int(mem.Alloc))
-				msg = "CPU Utilization: " + strconv.Itoa(cpu_system) + " | Memory Utilisation: " + strconv.Itoa(int(mem.Alloc))
+				msg = "CPU Utilization: " + strconv.FormatFloat(cpu_system, 'E', -1, 64) + " | Memory Utilisation: " + strconv.Itoa(int(mem.Alloc))
 			} else {
 				duration = time.Second * 5
 				msg = "Heart Beat..."
